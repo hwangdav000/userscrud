@@ -52,6 +52,20 @@ public class UserController {
 		userService.deleteUser(email);
 	}
 	
+	@DeleteMapping("/name/{name}")
+	public ResponseEntity<?> deleteUserByName(@PathVariable String name) {
+		
+		int success= userService.deleteUserByName(name);
+		
+		if (success==1) {
+			// deletion
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			// dupe user
+			return new ResponseEntity<String>("failure", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<User> createUser(@Valid @RequestBody User user){
 		User savedUser = userService.createUser(user);

@@ -45,4 +45,18 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
+	@Override
+	public int deleteUserByName(String name) {
+		// 1 if success 0 if failure
+		int count = userRepository.getUserCountByName(name);
+		
+		if (count > 1) {
+			return 0;
+		} else {
+			User user = userRepository.findByName(name);
+			userRepository.delete(user);
+			return 1;
+		}
+	}
+
 }
